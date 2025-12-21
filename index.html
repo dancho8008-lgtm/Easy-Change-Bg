@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>€asy Change BG</title>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div id="app">
+
+    <!-- 1) ГОРНА ЧЕРНА ЛЕНТА -->
+    <header class="top-bar">
+      <button id="lang-bg" class="lang-btn" type="button" aria-label="Български">BG</button>
+
+      <div class="app-title" data-i18n="app_title">€asy Change BG</div>
+
+   <button id="lang-en" class="lang-btn" type="button" aria-label="English">
+  EN
+</button>
+    </header>
+
+    <!-- 2) СРЕДНА ЗОНА (ФУНКЦИОНАЛНА ЧАСТ) -->
+    <main class="calculator">
+
+      <!-- Тук е функционалната част.
+           Засега слагаме само “скеле” – ще го пълним поле по поле. -->
+      <div class="work-area">
+
+        <!-- ГОРЕН РЕД: ЦЕНА -->
+        <div class="row">
+          <div class="col">
+            <div class="label" data-i18n="label_e1">Цена (€)</div>
+            <input id="price-eur" type="text" inputmode="decimal" value="0.00" />
+          </div>
+
+          <div class="col">
+            <div class="label" data-i18n="label_b1">Цена (лв)</div>
+            <input id="price-bgn" type="text" value="0.00" disabled />
+          </div>
+        </div>
+
+        <!-- СРЕДЕН РЕД: ПЛАТЕНО + ДОПЛАЩАНЕ -->
+        <div class="row">
+          <div class="col">
+            <div class="label" data-i18n="label_e2">Платено (€)</div>
+	<div id="paid-eur-hint" class="hint-line"></div>
+	<input id="paid-eur" type="text" value="0.00" />
+
+          </div>
+
+          <div class="col">
+            <!-- Текст над полето за доплащане -->
+            <div id="topup-text" class="topup-text" style="display:none;">Доплащане: 0.00 лв</div>
+
+            <div class="label" data-i18n="label_b2">Доплащане (лв)</div>
+	<div id="paid-bgn-hint" class="hint-line"></div>
+	<input id="paid-bgn" type="text" value="0.00" />
+          </div>
+        </div>
+
+        <!-- ДОЛЕН РЕД: РЕСТО (само текст) + КОЛКО ВРЪЩАМ -->
+        <div class="row">
+          <div class="col">
+ <div class="label" data-i18n="label_e4">Ресто (€)</div>
+<div id="return-eur-hint" class="hint-line"></div>
+<input id="return-eur" type="text" inputmode="decimal" value="0.00" />
+
+          </div>
+
+          <div class="col">
+<div class="label-white" data-i18n="label_b4">Ресто (лв.)</div>
+<div id="return-bgn-hint" class="hint-line"></div>
+<input id="return-bgn" type="text" value="0.00" disabled />
+
+          </div>
+        </div>
+
+      </div>
+    
+<div class="exchange-rate">
+  1.95583
+</div>
+
+</main>
+
+    <!-- 3) ДОЛНА ЧЕРНА ЛЕНТА -->
+    <footer class="bottom-bar">
+    <a id="video-btn" class="bottom-btn" href="resources.html" data-i18n="btn_video" ...>Ресурси</a>
+<button id="reset-btn" class="bottom-btn" data-i18n="btn_reset" type="button">Нулиране</button>
+<a id="donate-btn" class="bottom-btn" href="donate.html" data-i18n="btn_donate" ...>Дари</a>
+
+    </footer>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
