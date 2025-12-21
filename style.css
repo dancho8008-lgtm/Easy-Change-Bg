@@ -1,0 +1,329 @@
+/* =========================
+   RESET
+   ========================= */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+/* =========================
+   ФОН ЗАД ТЕЛЕФОНА
+   ========================= */
+body {
+  background: #e6e6e6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* =========================
+   ТЕЛЕФОННА РАМКА + ФОН (ЗНАМЕ)
+   ========================= */
+#app {
+  width: 320px;
+  height: 568px;
+
+  /* фон под знамето (черен) */
+  background-color: #000;
+
+  /* знамето (без изрязване) */
+  background-image: url("flag.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+
+  border: 3px solid #333;
+  border-radius: 26px;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+
+  /* 3 хоризонтални зони */
+  display: flex;
+  flex-direction: column;
+
+  position: relative;
+}
+
+/* =========================
+   (ПО ЖЕЛАНИЕ) OVERLAY – по подразбиране 0
+   Ако решиш да го включиш, смени 0 на 0.2/0.3
+   ========================= */
+#app::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0); /* <-- 0 както искаш засега */
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Всичко вътре да е над overlay-а */
+.top-bar, .calculator, .bottom-bar {
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================
+   ГОРНА ЛЕНТА
+   ========================= */
+.top-bar {
+  height: 54px;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+}
+
+.lang-btn {
+  width: 44px;
+  height: 36px;
+  border: 1px solid #444;
+  border-radius: 10px;
+  background: #111;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.app-title {
+  color: #fff;
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: 0.4px;
+  text-align: center;
+  flex: 1;
+}
+
+/* =========================
+   СРЕДНА ЗОНА (ФУНКЦИОНАЛНА ЧАСТ)
+   Засега само стабилизиране. Полета ще правим по-късно.
+   ========================= */
+.calculator {
+  flex: 1;
+  min-height: 0;
+  padding: 10px;
+
+  display: flex;
+  flex-direction: column;
+
+  position: relative;
+}
+
+/* =========================
+   ДОЛНА ЛЕНТА
+   ========================= */
+.bottom-bar {
+  height: 54px;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  gap: 8px;
+}
+
+/* 3 бутона равни */
+.bottom-btn {
+  flex: 1;
+  text-align: center;
+
+  background: #ffcc00;
+  color: #000;
+  font-weight: 800;
+  font-size: 14px;
+
+  padding: 10px 0;
+  border: none;
+  border-radius: 12px;
+  text-decoration: none;
+
+  cursor: pointer;
+  display: inline-block;
+}
+
+/* Ховър (само за компютър – не пречи на телефон) */
+.bottom-btn:hover {
+  filter: brightness(0.95);
+}
+/* =========================
+   ПОДРЕДБА НА ПОЛЕТАТА В СРЕДНАТА ЗОНА
+   ========================= */
+
+/* Контейнерът на работната зона */
+.work-area {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Всеки ред = две колони */
+.row {
+  display: grid;
+ grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); /* ляво / дясно */
+  gap: 12px;
+}
+
+/* Колона */
+.col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+
+/* Етикети */
+.label {
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+/* Полета */
+.col input {
+  height: 48px;              /* касов стандарт */
+  font-size: 1.2rem;
+  font-weight: 700;          /* bold цифри */
+  padding: 0 12px;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+
+/* Заключени полета */
+.col input:disabled {
+  background: #e0e0e0;
+  color: #000;
+  font-weight: 700;
+}
+
+/* Текст за доплащане */
+.topup-text {
+  color: #ffcc00;
+  font-weight: 800;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+/* Текстови стойности за ресто */
+.info-value {
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.85);
+  color: #000;
+
+  font-size: 16px;      /* същият като input */
+  font-weight: 700;    /* същият като input */
+
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+}
+.exchange-rate {
+  position: absolute;
+  bottom: 6px;              /* точно над черната лента */
+  left: 0;
+  right: 0;
+
+  text-align: center;
+
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: 1px;
+
+  opacity: 0.95;
+  pointer-events: none;     /* да не пречи на кликове */
+}
+/* Етикети в дясната (лв) колона – черен текст */
+.row > .col:last-child .label {
+  color: #000;
+}
+/* Изрично бели етикети */
+.label-white {
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+/* Ред за препоръчителна сума (запазва място) */
+.hint-line {
+  
+  min-height: 16px;      /* височина = един текстов ред */
+  font-size: 13px;
+  font-weight: 700;
+  color: RED;        /* червено*/
+  margin-bottom: 4px;
+
+  padding: 0 12px;
+  background: transparent;
+  border-radius: 8px;      /* ← заоблена рамка (винаги) */
+  color: transparent;
+  transition: background 0.2s ease, color 0.2s ease;
+
+}
+.hint-line:not(:empty) {
+  background: #ffffff;
+  min-height: 16px;      /* височина = един текстов ред */
+  font-size: 13px;
+  font-weight: 700;
+  color: RED;        /* червено*/
+  margin-bottom: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.content-card {
+  width: 290px;
+  height: 435px;
+
+  margin: auto;                 /* центриране */
+  padding: 20px;
+
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 16px;
+
+  color: #111;
+  line-height: 1.5;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;             /* ако текстът стане дълъг */
+}
+.donate-revolut-btn {
+  display: block;
+  width: 100%;
+  max-width: 260px;
+
+  margin: 20px auto 0;
+  padding: 14px 0;
+
+  text-align: center;
+  text-decoration: none;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  color: #fff;
+  background: #111;            /* близко до Revolut стил */
+  border-radius: 12px;
+
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.donate-revolut-btn:hover {
+  background: #000;
+}
+
+.donate-revolut-btn:active {
+  transform: scale(0.98);
+}
