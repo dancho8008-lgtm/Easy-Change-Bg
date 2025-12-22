@@ -37,24 +37,53 @@
 <a href=instructions.png target="_blank">3. Видео TikTok</a><br><br>
 <a href=instructions.png target="_blank">4. Видео YouTube</a><br><br></p></b>
 <center>	
-	<a href="#"   id="shareLink">
-	<img src="qr-easy-change-bg.png" alt="QR код €asy Change BG" style="width:90px; height:auto;" ><br>Share €asy Change BG
-	</a>
+<a href="#" id="shareLink">	
+	<img src="qr-easy-change-bg.png" alt="QR код €asy Change BG" style="width:90px; height:auto;" ><br>
+
+
+ <!-- Линк под QR кода -->
+Сподели €asy Change BG</a>
 </center>
-  <script>
-document.getElementById("shareLink").onclick = async (e) => {
-    e.preventDefault();
-    if (navigator.share) {
-        await navigator.share({
-            title: "€asy Change BG",
-            url: location.href
-        });
+<script>
+document.getElementById("shareLink").addEventListener("click", async (e) => {
+  e.preventDefault();
+
+  const appUrl = "https://dancho8008-lgtm.github.io/Easy-Change-Bg/index.html";
+  const title = "€asy Change BG";
+  const text  = "Отвори приложението тук:";
+
+  // 1) Ако няма Web Share API – fallback (пример: WhatsApp share)
+  if (!navigator.share) {
+    const wa = "https://wa.me/?text=" + encodeURIComponent(title + " " + appUrl);
+    window.open(wa, "_blank");
+    return;
+  }
+
+  try {
+    // 2) Опит за споделяне с икона като файл
+    const res = await fetch("icon-192.png", { cache: "no-store" });
+    const blob = await res.blob();
+    const file = new File([blob], "icon-192.png", { type: blob.type || "image/png" });
+
+    const shareWithIcon = { title, text, url: appUrl, files: [file] };
+
+    // Някои устройства поддържат share, но не и files
+    if (navigator.canShare && navigator.canShare(shareWithIcon)) {
+      await navigator.share(shareWithIcon);
     } else {
-        window.location.href =
-          "https://dancho8008-lgtm.github.io/Easy-Change-Bg/";
+      // 3) Fallback: само линк (пак отваря менюто)
+      await navigator.share({ title, text, url: appUrl });
     }
-};
+
+  } catch (err) {
+    // 4) Ако fetch/файлът не стане – пак сподели линка
+    try {
+      await navigator.share({ title, text, url: appUrl });
+    } catch (_) {}
+  }
+});
 </script>
+
 
 
 </div>
