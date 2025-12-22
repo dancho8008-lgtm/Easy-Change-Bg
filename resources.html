@@ -54,7 +54,7 @@ document.getElementById("shareLink").addEventListener("click", async (e) => {
 
   // 1) Ако няма Web Share API – fallback (пример: WhatsApp share)
   if (!navigator.share) {
-    const wa = "https://wa.me/?text=" + encodeURIComponent(title + " " + appUrl);
+    const wa = "https://wa.me/?text=https://dancho8008-lgtm.github.io/Easy-Change-Bg/";
     window.open(wa, "_blank");
     return;
   }
@@ -101,3 +101,4 @@ document.getElementById("shareLink").addEventListener("click", async (e) => {
 
 </body>
 </html>
+
