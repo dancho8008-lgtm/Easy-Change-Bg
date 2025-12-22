@@ -31,13 +31,30 @@
 
 
   <b><p>
-    <Center>Инструкции за ползването на приложението, може да видите чрез:<br><br><br></center>
+    <Center>Инструкции за плозване:<br><br></center>
 <a href=instructions.png target="_blank">1. Снимка на схема</a><br><br>
-<a href=instructions.png target="_blank">2. Как да запазя като OffLine приложение</a><br><br>
+<a href=instructions.png target="_blank">2. Инсталиране като приложение</a><br><br>
 <a href=instructions.png target="_blank">3. Видео TikTok</a><br><br>
-<a href=instructions.png target="_blank">4. Видео YouTube</a><br>
-
-  </p></b>
+<a href=instructions.png target="_blank">4. Видео YouTube</a><br><br></p></b>
+<center>	
+	<a href="#"   id="shareLink">
+	<img src="qr-easy-change-bg.png" alt="QR код €asy Change BG" style="width:90px; height:auto;" ><br>Share €asy Change BG
+	</a>
+</center>
+  <script>
+document.getElementById("shareLink").onclick = async (e) => {
+    e.preventDefault();
+    if (navigator.share) {
+        await navigator.share({
+            title: "€asy Change BG",
+            url: location.href
+        });
+    } else {
+        window.location.href =
+          "https://wa.me/?text=" + encodeURIComponent(location.href);
+    }
+};
+</script>
 
 
 </div>
@@ -55,4 +72,3 @@
 
 </body>
 </html>
-
