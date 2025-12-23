@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>€asy Change BG – Ресурси</title>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div id="app">
+
+    <!-- 1) ГОРНА ЧЕРНА ЛЕНТА -->
+    <header class="top-bar">
+      <button id="lang-bg" class="lang-btn" type="button" aria-label="Български">BG</button>
+
+      <div class="app-title" data-i18n="app_title">€asy Change BG</div>
+
+   <button id="lang-en" class="lang-btn" type="button" aria-label="English">
+  EN
+</button>
+    </header>
+
+  <!-- 2) СРЕДНА ЗОНА – ОБЩО ПРОСТРАНСТВО -->
+  <main class="calculator">
+
+    <div class="work-area">
+
+<div class="content-card">
+ <div style="display:flex; flex-direction:column; gap:14px;">
+
+  <div>
+    <div style="font-weight:700; font-size:1.05rem;" data-i18n="don_title">Подкрепа</div>
+    <div style="opacity:.85; font-size:.95rem;" data-i18n="don_text">
+      Ако приложението ти е било полезно, можеш да ме подкрепиш с малко дарение. Напълно доброволно.
+    </div>
+  </div>
+
+  <!-- Основен метод: Revolut -->
+  <a class="bottom-btn"
+     href="https://revolut.me/danchomx44"
+     target="_blank" rel="noopener"
+     style="text-align:center; width:100%;"
+     data-i18n="don_revolut_btn">
+    Подкрепи с Revolut
+  </a>
+ <!-- 
+  <div style="opacity:.75; font-size:.9rem;" data-i18n="don_hint">
+    Отваря Revolut директно. Най-лесният вариант.
+  </div>
+ -->
+  <!-- Втори метод: ePay -->
+ <!-- <a class="bottom-btn"
+   href="https://www.epay.bg/"
+   target="_blank" rel="noopener"
+   style="text-align:center; width:100%;"
+   data-i18n="don_epay_btn">
+  Подкрепи с ePay
+</a>
+
+<div style="opacity:.75; font-size:.9rem;" data-i18n="don_epay_hint">
+  Плащане с карта или ePay акаунт.
+</div>
+-->
+  <!-- Алтернативно: Банка (по желание) -->
+  <div style="border:1px solid rgba(255,255,255,.12); border-radius:12px; padding:12px;">
+    <div style="font-weight:700; margin-bottom:8px;" data-i18n="don_bank_title"> Банков превод</div>
+
+    <!-- Попълни тези 2 реда с твоите данни -->
+    <div style="opacity:.9; font-size:.85rem; word-break:break-all;">
+      <div><span style="opacity:.7;">IBAN:</span> <span id="ibanText">BG81UNCR70001598001541</span></div>
+      <div><span style="opacity:.7;">Титуляр:</span> <span id="ownerText">Данчо Цалов</span></div>
+    </div>
+
+    <div style="display:flex; gap:10px; margin-top:10px;">
+      <button class="bottom-btn" type="button" id="copyIbanBtn" style="flex:1; text-align:center;">
+        Копирай IBAN
+      </button>
+      <button class="bottom-btn" type="button" id="copyAllBtn" style="flex:1; text-align:center;">
+        Копирай данни
+      </button>
+    </div>
+
+    <div id="copyToast" style="display:none; margin-top:8px; opacity:.9; font-size:.9rem;">
+      ✅ Копирано
+    </div>
+  </div>
+
+</div>
+
+<script>
+
+  // Копиране (работи на https/localhost; при file:// може да е ограничено)
+  const toast = document.getElementById("copyToast");
+  const iban = document.getElementById("ibanText")?.textContent?.trim() || "";
+  const owner = document.getElementById("ownerText")?.textContent?.trim() || "";
+
+  document.getElementById("copyIbanBtn")?.addEventListener("click", async () => {
+    await copyText(iban);
+  });
+
+  document.getElementById("copyAllBtn")?.addEventListener("click", async () => {
+    const all = `IBAN: ${iban}\nТитуляр: ${owner}`;
+    await copyText(all);
+  });
+
+  async function copyText(text) {
+    try {
+      await navigator.clipboard.writeText(text);
+      showToast();
+    } catch (_) {
+      // fallback
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand("copy"); } catch (_) {}
+      document.body.removeChild(ta);
+      showToast();
+    }
+  }
+
+  function showToast() {
+    if (!toast) return;
+    toast.style.display = "block";
+    clearTimeout(showToast._t);
+    showToast._t = setTimeout(() => (toast.style.display = "none"), 1200);
+  }
+</script>
+
+</div>
+
+    </div>
+
+  </main>
+
+  <!-- 3) ДОЛНА ЧЕРНА ЛЕНТА -->
+  <footer class="bottom-bar">
+    <a class="bottom-btn" href="index.html">← Обратно</a>
+  </footer>
+
+</div>
+
+</body>
+</html>
