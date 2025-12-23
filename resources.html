@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>€asy Change BG – Ресурси</title>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div id="app">
+
+  <!-- 1) ГОРНА ЧЕРНА ЛЕНТА -->
+  <header class="top-bar">
+    <button id="lang-bg" class="lang-btn" type="button" aria-label="Български">BG</button>
+    <div class="app-title" data-i18n="app_title">€asy Change BG</div>
+    <button id="lang-en" class="lang-btn" type="button" aria-label="English">EN</button>
+  </header>
+
+  <!-- 2) СЪДЪРЖАНИЕ -->
+  <main class="calculator">
+    <div class="work-area">
+      <div class="content-card">
+
+  <!-- Всичко на един екран (в рамките на content-card) -->
+  <div style="
+    height: calc(100vh - 120px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 12px;
+  ">
+
+    <!-- A) QR код (като линк към основната страница) -->
+    <div style="text-align:center;">
+      <a
+        href="https://dancho8008-lgtm.github.io/Easy-Change-Bg/"
+        target="_blank"
+        rel="noopener"
+        aria-label="Отвори €asy Change BG"
+        style="display:inline-block;"
+      >
+        <img
+          src="qr-easy-change-bg.png"
+          alt="QR код €asy Change BG"
+          style="
+            width: 140px;
+            height: auto;
+            border-radius: 14px;
+            background: #fff;
+            padding: 10px;
+            display: block;
+          "
+        />
+      </a>
+<div style="opacity:.85; font-size:.92rem; margin-top:8px;" data-i18n="res_qr_hint">
+  Сканирай или натисни QR кода
+</div>
+
+
+    </div>
+
+    <!-- B) Действия -->
+    <div style="display:flex; flex-direction:column; gap:10px;">
+
+      <!-- Споделяне -->
+<button id="shareBtn" class="bottom-btn" type="button" data-i18n="res_share_btn">Сподели приложението</button>
+
+      <!-- Инструкции -->
+<a class="bottom-btn" href="instructions.png" target="_blank" rel="noopener" data-i18n="res_instructions_btn">Инструкции (снимка)</a>
+
+      <!-- Видеа: готови бутони с иконка + надпис "Видео" -->
+      <div style="display:flex; gap:10px;">
+        <a id="ytBtn" class="bottom-btn" href="https://www.youtube.com/shorts/4NFs0TcMunI" target="_blank" rel="noopener"
+           style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; padding:10px 8px; text-align:center;">
+          <img src="yt-icon.svg" alt="" style="width:22px; height:22px;">
+          <div style="font-size:.85rem; line-height:1.05;"><span style="opacity:.8;" data-i18n="res_video_label">Видео</span></div>
+        </a>
+
+        <a id="ttBtn" class="bottom-btn" href="https://www.tiktok.com/@dancho.ts/video/7587171835268189462" target="_blank" rel="noopener"
+           style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; padding:10px 8px; text-align:center;">
+          <img src="tiktok-icon.svg" alt="" style="width:22px; height:22px;">
+          <div style="font-size:.85rem; line-height:1.05;"><span style="opacity:.8;" data-i18n="res_video_label">Видео</span></div>
+        </a>
+
+        <a id="fbBtn" class="bottom-btn" href="https://www.facebook.com/reel/1356716075690674" target="_blank" rel="noopener"
+           style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; padding:10px 8px; text-align:center;">
+          <img src="fb-icon.svg" alt="" style="width:22px; height:22px;">
+          <div style="font-size:.85rem; line-height:1.05;"><span style="opacity:.8;" data-i18n="res_video_label">Видео</span></div>
+        </a>
+      </div>
+.
+
+      <div id="copyToast" style="display:none; opacity:.9; font-size:.9rem; text-align:center;">
+        ✅ Линкът е копиран
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Споделяй винаги основния линк (не resources.html)
+    const APP_URL = "https://dancho8008-lgtm.github.io/Easy-Change-Bg/";
+    const SHARE_TITLE = "€asy Change BG";
+    const SHARE_TEXT  = "Лесно ресто € / лв (работи офлайн). Отвори:";
+
+    const toast = document.getElementById("copyToast");
+
+    document.getElementById("shareBtn").addEventListener("click", async () => {
+      if (navigator.share) {
+        try {
+          await navigator.share({ title: SHARE_TITLE, text: SHARE_TEXT, url: APP_URL });
+          return;
+        } catch (_) {}
+      }
+      // fallback: копирай линка
+      try {
+        await navigator.clipboard.writeText(APP_URL);
+        showToast();
+      } catch (_) {
+        prompt("Копирай линка:", APP_URL);
+      }
+    });
+
+    function showToast() {
+      toast.style.display = "block";
+      clearTimeout(showToast._t);
+      showToast._t = setTimeout(() => (toast.style.display = "none"), 1400);
+    }
+
+    // Плейсхолдъри за видео линкове – само закачи URL-и, когато ги имаш:
+    // document.getElementById("ytBtn").href = "https://youtube.com/shorts/....";
+    // document.getElementById("ttBtn").href = "https://www.tiktok.com/@.../video/....";
+    // document.getElementById("fbBtn").href = "https://www.facebook.com/reel/....";
+
+    // По желание: докато няма линкове, да не “водят никъде”
+    ["ytBtn","ttBtn","fbBtn"].forEach(id => {
+      const a = document.getElementById(id);
+      if (a.getAttribute("href") === "#") {
+        a.addEventListener("click", (e) => e.preventDefault());
+        a.style.opacity = "0.75";
+      }
+    });
+  </script>
+
+</div>
+
+    </div>
+  </main>
+
+  <!-- 3) ДОЛНА ЧЕРНА ЛЕНТА -->
+  <footer class="bottom-bar">
+    <a class="bottom-btn" href="index.html"><span data-i18n="btn_back">← Обратно</span></a>
+
+  </footer>
+
+</div>
+
+
+<script src="app.js"></script>
+
+</body>
+</html>
